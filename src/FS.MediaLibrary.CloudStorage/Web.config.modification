@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  A modification of web.config is required, in order to handle redirects in Content Editor/Experience Editor
+  or when direct Cloud URLs are not used. Since the handler is not specified in the Sitecore section of
+  the config it cannot be overwritten using a patch config
+-->
+<configuration>
+  <system.webServer>
+    <handlers>
+      <!-- ********** Override Media Request Handler *************
+      <add verb="*" path="sitecore_media.ashx" type="Sitecore.Resources.Media.MediaRequestHandler, Sitecore.Kernel" name="Sitecore.MediaRequestHandler"/>-->
+      <add verb="*" path="sitecore_media.ashx" type="FS.MediaLibrary.CloudStorage.Media.MediaRequestHandler, Media.CdnStorage" name="Sitecore.MediaRequestHandler"/>
+    </handlers>
+  </system.webServer>
+</configuration>
