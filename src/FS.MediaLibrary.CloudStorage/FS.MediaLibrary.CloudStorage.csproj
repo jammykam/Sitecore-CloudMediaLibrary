@@ -76,7 +76,7 @@
     <Compile Include="Provider\CloudStorageProvider.cs" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="App_Config\Include\z.MediaCloudStorage\Media.Prefix.config.isabled" />
+    <None Include="App_Config\Include\z.MediaCloudStorage\Media.Prefix.config.disabled" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="App_Config\Include\z.MediaCloudStorage\Media.CloudStorage.config">
