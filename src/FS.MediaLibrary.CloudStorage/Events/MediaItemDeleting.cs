@@ -1,6 +1,5 @@
 ﻿using System;
-using FS.MediaLibrary.CloudStorage.Constants;
-using FS.MediaLibrary.CloudStorage.Interfaces;
+using FS.MediaLibrary.CloudStorage.Interface;
 using FS.MediaLibrary.CloudStorage.Provider;
 using Sitecore.Data.Items;
 using Sitecore.Diagnostics;
@@ -10,6 +9,13 @@ namespace FS.MediaLibrary.CloudStorage.Events
 {
     public class MediaItemDeleting
     {
+        ICloudStorageProvider cloudStorage;
+
+        public MediaItemDeleting()
+        {
+            cloudStorage = new CloudStorageProvider();
+        }
+
         public void OnItemDeleting(object sender, EventArgs args)
         {
             Assert.ArgumentNotNull(sender, "sender");
@@ -25,11 +31,9 @@ namespace FS.MediaLibrary.CloudStorage.Events
                 return;
 
             var media = new MediaItem(item);
-
             if (media.FileBased)
             {
-                ICloudStorageProvider storage = new CloudStorageProvider();
-                storage.Delete(media);
+                cloudStorage.Delete(item);
             }
         }
     }

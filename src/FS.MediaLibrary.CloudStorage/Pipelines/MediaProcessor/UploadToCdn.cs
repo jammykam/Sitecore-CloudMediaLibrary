@@ -1,7 +1,7 @@
 ﻿using System.Diagnostics;
 using System.Linq;
 using FS.MediaLibrary.CloudStorage.Constants;
-using FS.MediaLibrary.CloudStorage.Interfaces;
+using FS.MediaLibrary.CloudStorage.Interface;
 using FS.MediaLibrary.CloudStorage.Provider;
 using Sitecore;
 using Sitecore.Data.Items;

@@ -23,15 +23,11 @@ namespace FS.MediaLibrary.CloudStorage.Pipelines.MediaProcessor
 
             foreach (Item file in args.UploadedItems.Where(file => file.Paths.IsMediaItem))
             {
-                Profiler.StartOperation("Calculating MD5 hash for " + file.Paths.FullPath);
-
                 using (new EditContext(file, SecurityCheck.Disable))
                 {
                     var helper = new MediaHelper(file);
                     file[FieldNameConstants.MediaItem.MD5Hash] = helper.CalculateMd5();
                 }
-
-                Profiler.EndOperation();
             }
 
             sw.Stop();

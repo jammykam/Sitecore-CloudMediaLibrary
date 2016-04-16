@@ -1,4 +1,4 @@
-﻿using FS.MediaLibrary.CloudStorage.Interfaces;
+﻿using FS.MediaLibrary.CloudStorage.Interface;
 using FS.MediaLibrary.CloudStorage.Provider;
 using Sitecore.Diagnostics;
 using Sitecore.Pipelines.Attach;

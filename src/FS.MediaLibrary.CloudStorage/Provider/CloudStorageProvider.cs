@@ -1,5 +1,6 @@
 ﻿using FS.MediaLibrary.CloudStorage.Helpers;
-using FS.MediaLibrary.CloudStorage.Interfaces;
+using FS.MediaLibrary.CloudStorage.Interface;
+using FS.MediaLibrary.CloudStorage.Interface;
 using Sitecore.Configuration;
 using Sitecore.Data.Items;
 

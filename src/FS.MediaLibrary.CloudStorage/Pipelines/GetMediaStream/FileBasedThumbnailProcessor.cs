@@ -1,5 +1,6 @@
 ﻿using FS.MediaLibrary.CloudStorage.Helpers;
 using Sitecore.Resources.Media;
+using SC = Sitecore.Configuration;
 
 namespace FS.MediaLibrary.CloudStorage.Pipelines.GetMediaStream
 {
@@ -29,7 +30,7 @@ namespace FS.MediaLibrary.CloudStorage.Pipelines.GetMediaStream
             return (args.Options.Thumbnail 
                         && args.MediaData.MediaItem.FileBased 
                         && !string.IsNullOrEmpty(args.MediaData.MediaItem.Icon) 
-                        && args.MediaData.MediaItem.Icon.StartsWith(Sitecore.Configuration.Settings.Media.MediaLinkPrefix));
+                        && args.MediaData.MediaItem.Icon.StartsWith(SC.Settings.Media.MediaLinkPrefix));
         }
     }
 }

@@ -58,8 +58,8 @@
     <Compile Include="Events\MediaItemDeleting.cs" />
     <Compile Include="Helpers\MediaHelper.cs" />
     <Compile Include="Helpers\PipelineHelper.cs" />
-    <Compile Include="Interfaces\ICloudStorage.cs" />
-    <Compile Include="Interfaces\ICloudStorageProvider.cs" />
+    <Compile Include="Interface\ICloudStorage.cs" />
+    <Compile Include="Interface\ICloudStorageProvider.cs" />
     <Compile Include="Media\MediaProvider.cs" />
     <Compile Include="Media\MediaRequestHandler.cs" />
     <Compile Include="Pipelines\AttachFile\DeletePreviousMedia.cs" />
