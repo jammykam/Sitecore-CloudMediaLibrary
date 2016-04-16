@@ -1,8 +1,9 @@
 ﻿using System.Diagnostics;
 using System.Linq;
+using Arm.CMS.Services.Media;
 using FS.MediaLibrary.CloudStorage.Constants;
 using FS.MediaLibrary.CloudStorage.Helpers;
-using FS.MediaLibrary.CloudStorage.Services;
+using FS.MediaLibrary.CloudStorage.Interfaces;
 using Sitecore;
 using Sitecore.Data.Items;
 using Sitecore.Diagnostics;
@@ -15,7 +16,7 @@ namespace FS.MediaLibrary.CloudStorage.Pipelines.MediaProcessor
     /// </summary>
     public class UploadToCdn // : IMediaProcessor
     {
-        ICloudStorage storage = new AzureStorage();
+        ICloudStorage storage = new CloudStorageProvider().GetProvider();
         MediaHelper helper = new MediaHelper();
 
         public void Process(MediaProcessorArgs args)

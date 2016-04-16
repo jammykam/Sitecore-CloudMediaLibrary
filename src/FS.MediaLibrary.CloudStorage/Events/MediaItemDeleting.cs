@@ -1,6 +1,7 @@
 ﻿using System;
+using Arm.CMS.Services.Media;
 using FS.MediaLibrary.CloudStorage.Constants;
-using FS.MediaLibrary.CloudStorage.Services;
+using FS.MediaLibrary.CloudStorage.Interfaces;
 using Sitecore.Data.Items;
 using Sitecore.Diagnostics;
 using Sitecore.Events;
@@ -27,7 +28,7 @@ namespace FS.MediaLibrary.CloudStorage.Events
 
             if (media.FileBased)
             {
-                ICloudStorage storage = new AzureStorage();
+                ICloudStorage storage = new CloudStorageProvider().GetProvider();
                 string filename = item[FieldNameConstants.MediaItem.FilePath];
                 storage.Delete(filename);
             }

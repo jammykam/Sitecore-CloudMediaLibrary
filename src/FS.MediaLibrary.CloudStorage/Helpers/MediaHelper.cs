@@ -1,15 +1,14 @@
 ﻿using System;
-using System.Configuration;
 using System.IO;
 using System.Security.Cryptography;
 using System.Text.RegularExpressions;
 using System.Web.Hosting;
-using FS.MediaLibrary.CloudStorage.Constants;
-using Sitecore.Configuration;
+using FS.MediaLibrary.CloudStorage.Configuration;
 using Sitecore.Data.Items;
 using Sitecore.Diagnostics;
 using Sitecore.Resources.Media;
 using Sitecore.StringExtensions;
+using SC = Sitecore.Configuration;
 
 namespace FS.MediaLibrary.CloudStorage.Helpers
 {
@@ -64,7 +63,7 @@ namespace FS.MediaLibrary.CloudStorage.Helpers
         public string ParseMediaFileName(MediaItem media)
         {
             string filename = MediaManager.GetMediaUrl(media);
-            string mediaPrefix = Sitecore.StringUtil.EnsurePostfix('/', Settings.Media.MediaLinkPrefix);
+            string mediaPrefix = Sitecore.StringUtil.EnsurePostfix('/', SC.Settings.Media.MediaLinkPrefix);
 
             Regex regex = new Regex(@"(?<={0}).+".FormatWith(mediaPrefix));
             Match match = regex.Match(filename);
@@ -75,15 +74,11 @@ namespace FS.MediaLibrary.CloudStorage.Helpers
         }
 
 
-        /// <summary>
-        /// Returns the URL of the media item stored in Cloud storage
-        /// </summary>
-        /// <param name="mediaItem">The media item</param>
+        /// <summary>Returns the URL of the media item stored in Cloud storage</summary>
         /// <returns>Full URL of media stoed in </returns>
         public string GetCloudBasedMediaUrl(MediaItem mediaItem)
         {
-            return GetCloudBasedMediaUrl(mediaItem,
-                    Sitecore.StringUtil.EnsurePostfix('/', ConfigurationManager.AppSettings[AppSettings.AzureStorageUrl]));
+            return GetCloudBasedMediaUrl(mediaItem, Settings.CloudMediaUrl);
         }
 
         public string GetCloudBasedMediaUrl(MediaItem mediaItem, string cloudUrl)

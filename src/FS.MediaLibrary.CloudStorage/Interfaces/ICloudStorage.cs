@@ -1,6 +1,6 @@
 ﻿using Sitecore.Data.Items;
 
-namespace FS.MediaLibrary.CloudStorage.Services
+namespace FS.MediaLibrary.CloudStorage.Interfaces
 {
     public interface ICloudStorage
     {
