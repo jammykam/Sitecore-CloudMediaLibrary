@@ -1,4 +1,5 @@
-﻿using FS.MediaLibrary.CloudStorage.Services;
+﻿using Arm.CMS.Services.Media;
+using FS.MediaLibrary.CloudStorage.Interfaces;
 using Sitecore.Diagnostics;
 using Sitecore.Pipelines.Attach;
 using Sitecore.StringExtensions;
@@ -20,7 +21,7 @@ namespace FS.MediaLibrary.CloudStorage.Pipelines.attachFile
 
             Log.Info("Deleting '{0}' from Cloud storage".FormatWith(args.MediaItem.FilePath), this);
             
-            ICloudStorage storage = new AzureStorage();
+            ICloudStorage storage = new CloudStorageProvider().GetProvider();
             storage.Delete(args.MediaItem.FilePath);
         }
     }
