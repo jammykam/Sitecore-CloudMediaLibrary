@@ -28,9 +28,8 @@ namespace FS.MediaLibrary.CloudStorage.Events
 
             if (media.FileBased)
             {
-                ICloudStorage storage = new CloudStorageProvider().GetProvider();
-                string filename = item[FieldNameConstants.MediaItem.FilePath];
-                storage.Delete(filename);
+                ICloudStorageProvider storage = new CloudStorageProvider();
+                storage.Delete(media);
             }
         }
     }

@@ -1,4 +1,5 @@
-﻿using FS.MediaLibrary.CloudStorage.Provider;
+﻿using System.IO;
+using FS.MediaLibrary.CloudStorage.Provider;
 using Microsoft.WindowsAzure.Storage;
 using Microsoft.WindowsAzure.Storage.Auth;
 using Microsoft.WindowsAzure.Storage.Blob;
@@ -46,7 +47,7 @@ namespace FS.MediaLibrary.AzureStorage
             string filename = base.ParseMediaFileName(media);
 
             CloudBlockBlob blob = _blobContainer.GetBlockBlobReference(filename);
-            using (var fileStream = media.GetMediaStream())
+            using (Stream fileStream = media.GetMediaStream())
             {
                 blob.UploadFromStream(fileStream);
             }

@@ -16,11 +16,11 @@ namespace FS.MediaLibrary.CloudStorage.Pipelines.MediaProcessor
     /// </summary>
     public class UploadToCdn
     {
-        ICloudStorage cloudStorage;
+        ICloudStorageProvider cloudStorage;
 
         public UploadToCdn()
         {
-            cloudStorage = new CloudStorageProvider().GetProvider();
+            cloudStorage = new CloudStorageProvider();
         }
 
         public void Process(MediaProcessorArgs args)
@@ -36,7 +36,7 @@ namespace FS.MediaLibrary.CloudStorage.Pipelines.MediaProcessor
 
                 // delete if previously uploaded
                 if (MainUtil.GetBool(file[FieldNameConstants.MediaItem.UploadedToCloud], false))
-                    cloudStorage.Delete(file[FieldNameConstants.MediaItem.FilePath]);
+                    cloudStorage.Delete(file);
 
                 // upload to CDN
                 string filename = cloudStorage.Put(file);

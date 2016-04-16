@@ -62,8 +62,8 @@
     <Compile Include="Interfaces\ICloudStorageProvider.cs" />
     <Compile Include="Media\MediaProvider.cs" />
     <Compile Include="Media\MediaRequestHandler.cs" />
-    <Compile Include="Pipelines\attachFile\DeletePreviousMedia.cs" />
-    <Compile Include="Pipelines\attachFile\ProcessMedia.cs" />
+    <Compile Include="Pipelines\AttachFile\DeletePreviousMedia.cs" />
+    <Compile Include="Pipelines\AttachFile\ProcessMedia.cs" />
     <Compile Include="Pipelines\GetMediaStream\FileBasedThumbnailProcessor.cs" />
     <Compile Include="Pipelines\MediaProcessor\CalculateFileHash.cs" />
     <Compile Include="Pipelines\MediaProcessor\GenerateThumbnail.cs" />
@@ -76,7 +76,7 @@
     <Compile Include="Provider\CloudStorageProvider.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="App_Config\Include\z.MediaCloudStorage\Media.Prefix.config" />
+    <None Include="App_Config\Include\z.MediaCloudStorage\Media.Prefix.config.isabled" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="App_Config\Include\z.MediaCloudStorage\Media.CloudStorage.config">
