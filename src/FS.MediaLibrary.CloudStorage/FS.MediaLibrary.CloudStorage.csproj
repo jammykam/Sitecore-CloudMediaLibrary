@@ -118,9 +118,6 @@
     </Content>
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Web.config" />
-  </ItemGroup>
-  <ItemGroup>
     <Content Include="App_Config\AppSettings.config" />
   </ItemGroup>
   <ItemGroup>
