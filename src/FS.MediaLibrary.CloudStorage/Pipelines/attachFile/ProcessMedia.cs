@@ -6,6 +6,9 @@ using Sitecore.Pipelines.Attach;
 
 namespace FS.MediaLibrary.CloudStorage.Pipelines.attachFile
 {
+    /// <summary>
+    /// Kicks off process to start media upload job
+    /// </summary>
     public class ProcessMedia
     {
         public void Process(AttachArgs args)

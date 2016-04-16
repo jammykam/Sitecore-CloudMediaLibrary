@@ -64,7 +64,9 @@
     <Compile Include="Media\MediaRequestHandler.cs" />
     <Compile Include="Pipelines\attachFile\DeletePreviousMedia.cs" />
     <Compile Include="Pipelines\attachFile\ProcessMedia.cs" />
+    <Compile Include="Pipelines\GetMediaStream\FileBasedThumbnailProcessor.cs" />
     <Compile Include="Pipelines\MediaProcessor\CalculateFileHash.cs" />
+    <Compile Include="Pipelines\MediaProcessor\GenerateThumbnail.cs" />
     <Compile Include="Pipelines\MediaProcessor\MediaProcessorArgs.cs" />
     <Compile Include="Pipelines\MediaProcessor\UploadToCdn.cs" />
     <Compile Include="Pipelines\uiUpload\EnsureFileBasedMedia.cs" />

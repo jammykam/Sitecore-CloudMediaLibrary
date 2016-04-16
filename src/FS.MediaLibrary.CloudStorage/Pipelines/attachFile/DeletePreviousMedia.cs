@@ -1,5 +1,5 @@
-﻿using Arm.CMS.Services.Media;
-using FS.MediaLibrary.CloudStorage.Interfaces;
+﻿using FS.MediaLibrary.CloudStorage.Interfaces;
+using FS.MediaLibrary.CloudStorage.Provider;
 using Sitecore.Diagnostics;
 using Sitecore.Pipelines.Attach;
 using Sitecore.StringExtensions;

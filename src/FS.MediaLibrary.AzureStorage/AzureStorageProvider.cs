@@ -10,7 +10,7 @@ namespace FS.MediaLibrary.AzureStorage
     /// <summary>
     /// Uploads media items into Azure Blob storage container
     /// </summary>
-    internal class AzureStorageProvider : CloudStorageBase
+    public class AzureStorageProvider : CloudStorageBase
     {
         private CloudBlobContainer _blobContainer;
         private string _storageAccountName;
@@ -43,7 +43,7 @@ namespace FS.MediaLibrary.AzureStorage
         /// <returns>Location of file in container</returns>
         public override string Put(MediaItem media)
         {
-            string filename = ParseMediaFileName(media);
+            string filename = base.ParseMediaFileName(media);
 
             CloudBlockBlob blob = _blobContainer.GetBlockBlobReference(filename);
             using (var fileStream = media.GetMediaStream())

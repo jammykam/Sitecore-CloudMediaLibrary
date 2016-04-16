@@ -1,7 +1,7 @@
 ﻿using System;
-using Arm.CMS.Services.Media;
 using FS.MediaLibrary.CloudStorage.Constants;
 using FS.MediaLibrary.CloudStorage.Interfaces;
+using FS.MediaLibrary.CloudStorage.Provider;
 using Sitecore.Data.Items;
 using Sitecore.Diagnostics;
 using Sitecore.Events;

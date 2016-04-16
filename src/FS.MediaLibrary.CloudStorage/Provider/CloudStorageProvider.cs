@@ -1,7 +1,7 @@
 ﻿using FS.MediaLibrary.CloudStorage.Interfaces;
 using Sitecore.Configuration;
 
-namespace Arm.CMS.Services.Media
+namespace FS.MediaLibrary.CloudStorage.Provider
 {
     public class CloudStorageProvider : ICloudStorageProvider
     {

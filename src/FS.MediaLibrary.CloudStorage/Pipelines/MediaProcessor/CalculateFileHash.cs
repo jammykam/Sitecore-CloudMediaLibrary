@@ -11,13 +11,13 @@ namespace FS.MediaLibrary.CloudStorage.Pipelines.MediaProcessor
     /// <summary>
     /// Calculates MD5 hash of uploaded file and stores in media template
     /// </summary>
-    public class CalculateFileHash // : IMediaProcessor
+    public class CalculateFileHash
     {
         public void Process(MediaProcessorArgs args)
         {
             Assert.ArgumentNotNull(args, "args");
-            Log.Info("Processing file MD5 calculation", this);
-            var helper = new MediaHelper();
+            Log.Debug("Processing file MD5 calculation", this);
+
             var sw = new Stopwatch();
             sw.Start();
 
@@ -27,14 +27,15 @@ namespace FS.MediaLibrary.CloudStorage.Pipelines.MediaProcessor
 
                 using (new EditContext(file, SecurityCheck.Disable))
                 {
-                    file[FieldNameConstants.MediaItem.MD5Hash] = helper.CalculateMd5((MediaItem)file);
+                    var helper = new MediaHelper(file);
+                    file[FieldNameConstants.MediaItem.MD5Hash] = helper.CalculateMd5();
                 }
 
                 Profiler.EndOperation();
             }
 
             sw.Stop();
-            Log.Info("Finished calculating MD5 hash for files: " + sw.Elapsed, this);
+            Log.Debug("Finished calculating MD5 hash for files: " + sw.Elapsed, this);
         }
     }
 }
