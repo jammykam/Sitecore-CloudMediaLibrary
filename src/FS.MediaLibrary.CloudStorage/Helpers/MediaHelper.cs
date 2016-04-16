@@ -1,30 +1,30 @@
 ﻿using System;
-using System.IO;
 using System.Security.Cryptography;
-using System.Text.RegularExpressions;
-using System.Web.Hosting;
 using FS.MediaLibrary.CloudStorage.Configuration;
+using Sitecore;
 using Sitecore.Data.Items;
-using Sitecore.Diagnostics;
+using Sitecore.IO;
 using Sitecore.Resources.Media;
-using Sitecore.StringExtensions;
-using SC = Sitecore.Configuration;
 
 namespace FS.MediaLibrary.CloudStorage.Helpers
 {
     public class MediaHelper
     {
-        /// <summary>
-        /// Calculats MD5 hash for files uploaded to media library
-        /// </summary>
-        /// <param name="media"></param>
-        /// <returns></returns>
-        public string CalculateMd5(MediaItem media)
+        private MediaItem mediaItem;
+
+        public MediaHelper(MediaItem item)
+        {
+            this.mediaItem = item;
+        }
+
+        /// <summary>Calculats MD5 hash for files uploaded to media library</summary>
+        /// <returns>MD5 Hash of file</returns>
+        public string CalculateMd5()
         {
             byte[] hash;
             using (var md5 = MD5.Create())
             {
-                using (var stream = media.GetMediaStream())
+                using (var stream = this.mediaItem.GetMediaStream())
                 {
                     hash = md5.ComputeHash(stream);
                 }
@@ -32,58 +32,77 @@ namespace FS.MediaLibrary.CloudStorage.Helpers
             return BitConverter.ToString(hash).ToLower().Replace("-", string.Empty);
         }
 
-
-        /// <summary>
-        /// Deletes media file from disk
-        /// </summary>
-        /// <param name="media"></param>
-        public void DeleteFile(string media)
-        {
-            string filepath = HostingEnvironment.MapPath(media);
-
-            if (File.Exists(filepath))
-            {
-                try
-                {
-                    File.Delete(filepath);
-                }
-                catch (IOException ioe)
-                {
-                    Log.Warn(ioe.Message, ioe, this);
-                }
-            }
-        }
-
-
-        /// <summary>
-        /// Extracts the filepath after the prefix link of the media item from the media url
-        /// </summary>
-        /// <param name="media">MediaItem</param>
-        /// <returns>string filepath</returns>
-        public string ParseMediaFileName(MediaItem media)
-        {
-            string filename = MediaManager.GetMediaUrl(media);
-            string mediaPrefix = Sitecore.StringUtil.EnsurePostfix('/', SC.Settings.Media.MediaLinkPrefix);
-
-            Regex regex = new Regex(@"(?<={0}).+".FormatWith(mediaPrefix));
-            Match match = regex.Match(filename);
-            if (match.Success)
-                filename = match.Value;
-
-            return filename;
-        }
-
-
         /// <summary>Returns the URL of the media item stored in Cloud storage</summary>
         /// <returns>Full URL of media stoed in </returns>
-        public string GetCloudBasedMediaUrl(MediaItem mediaItem)
+        public string GetCloudBasedMediaUrl()
         {
-            return GetCloudBasedMediaUrl(mediaItem, Settings.CloudMediaUrl);
+            return GetCloudBasedMediaUrl(Settings.CloudMediaUrl);
         }
 
-        public string GetCloudBasedMediaUrl(MediaItem mediaItem, string cloudUrl)
+        public string GetCloudBasedMediaUrl(string cloudUrl)
         {
-            return cloudUrl + mediaItem.FilePath;
+            return cloudUrl + this.mediaItem.FilePath;
         }
+
+        /// <summary>
+        /// Generates a thumbnail of the media item and stores to Media Thumbnail Cache folder
+        /// </summary>
+        public void GenerateThumbnail()
+        {
+            // we only care about storing generated thumnails, not default icons
+            ThumbnailGenerator thumbnailGenerator = MediaManager.Config.GetThumbnailGenerator(mediaItem.Extension);
+            if (!(thumbnailGenerator is ImageThumbnailGenerator))
+                return;
+
+            CreateThumbnail();
+        }
+
+        private void CreateThumbnail()
+        {
+            var mediaData = new MediaData(this.mediaItem);
+            MediaStream thumbnailStream = mediaData.GetThumbnailStream();
+            if (thumbnailStream == null)
+                return;
+
+            string file = GetThumbnailFilename();
+            FileUtil.EnsureFileFolder(file);
+            FileUtil.CreateFile(FileUtil.MapPath(file), thumbnailStream.Stream, true);
+        }
+
+        private string GetThumbnailFilename()
+        {
+            return String.Format("{0}{1}.{2}",
+                                    GetThumnailCacheFolder(),
+                                    mediaItem.ID.ToShortID(),
+                                    mediaItem.Extension);
+        }
+
+        private string GetThumnailCacheFolder()
+        {
+            string folder = Settings.MediaThumbnailCacheFolder + ((byte)mediaItem.ID.GetHashCode());
+            return StringUtil.EnsurePostfix('/', folder);
+        }
+
+        /// <summary>
+        /// Gets Stream if Media Thumbnail file is exists in cache folder
+        /// </summary>
+        /// <returns>MediaStream</returns>
+        public MediaStream GetThumbnailStream()
+        {
+            string filename = GetThumbnailFilename();
+            if (FileUtil.FileExists(filename))
+            {
+                return new MediaStream(FileUtil.OpenRead(filename), mediaItem.Extension, mediaItem);
+            }
+
+            return null;
+        }
+
+        /// <summary>Deletes media file from disk</summary>
+        public void DeleteThumbnail()
+        {
+            FileUtil.Delete(GetThumbnailFilename());
+        }
+
     }
 }

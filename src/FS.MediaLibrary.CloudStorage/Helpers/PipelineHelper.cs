@@ -14,7 +14,7 @@ namespace FS.MediaLibrary.CloudStorage.Helpers
         public void StartMediaProcessorJob(IEnumerable<Item> uploadedItems)
         {
             var args = new MediaProcessorArgs { UploadedItems = uploadedItems };
-            var jobOptions = new Sitecore.Jobs.JobOptions("ArmMediaProcessor", "MediaProcessing",
+            var jobOptions = new Sitecore.Jobs.JobOptions("CloudMediaProcessor", "MediaProcessing",
                                                           Sitecore.Context.Site.Name,
                                                           this, "RunMediaProcessor", new object[] { args });
             Sitecore.Jobs.JobManager.Start(jobOptions);

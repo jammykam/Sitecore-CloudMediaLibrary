@@ -9,30 +9,35 @@ namespace FS.MediaLibrary.CloudStorage.Media
     {
         protected override bool DoProcessRequest(HttpContext context)
         {
-            Assert.ArgumentNotNull((object)context, "context");
+            Assert.ArgumentNotNull((object) context, "context");
             MediaRequest request = MediaManager.ParseMediaRequest(context.Request);
             if (request == null)
                 return false;
             Sitecore.Resources.Media.Media media = MediaManager.GetMedia(request.MediaUri);
 
-            if (!request.Options.Thumbnail && IsCdnMedia(media))
+            if (!IsCdnMedia(media))
+                return base.DoProcessRequest(context);
+
+            if (request.Options.Thumbnail)
             {
-                return this.DoProcessRequest(context, media);
+                request.Options.UseMediaCache = false;
+                return base.DoProcessRequest(context, request, media);
             }
 
-            return base.DoProcessRequest(context);
+            return this.DoProcessRequest(context, media);
         }
 
         private bool DoProcessRequest(HttpContext context, Sitecore.Resources.Media.Media media)
         {
-            var helper = new MediaHelper();
-            string redirectUrl = helper.GetCloudBasedMediaUrl(media.MediaData.MediaItem);
-            context.Response.Redirect(redirectUrl);
+            var helper = new MediaHelper(media.MediaData.MediaItem);
+            string redirectUrl = helper.GetCloudBasedMediaUrl();
+            context.Response.Redirect(redirectUrl, false);
+            context.ApplicationInstance.CompleteRequest();
             return true;
         }
 
         private bool IsCdnMedia(Sitecore.Resources.Media.Media media)
-        {   
+        {
             return (media != null && media.MediaData.MediaItem.FileBased);
         }
     }

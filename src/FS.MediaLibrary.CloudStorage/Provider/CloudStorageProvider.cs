@@ -1,13 +1,37 @@
-﻿using FS.MediaLibrary.CloudStorage.Interfaces;
+﻿using FS.MediaLibrary.CloudStorage.Helpers;
+using FS.MediaLibrary.CloudStorage.Interface;
+using FS.MediaLibrary.CloudStorage.Interface;
 using Sitecore.Configuration;
+using Sitecore.Data.Items;
 
-namespace Arm.CMS.Services.Media
+namespace FS.MediaLibrary.CloudStorage.Provider
 {
     public class CloudStorageProvider : ICloudStorageProvider
     {
-        public ICloudStorage GetProvider()
+        private ICloudStorage Provider;
+
+        public CloudStorageProvider()
         {
-            return Factory.CreateObject("cloudMediaStorage/storageProvider", true) as ICloudStorage;
+            Provider = Factory.CreateObject("cloudMediaStorage/storageProvider", true) as ICloudStorage;
+        }
+
+        public string Put(MediaItem media)
+        {
+            return Provider.Put(media);
+        }
+
+        public string Update(MediaItem media)
+        {
+            return Provider.Update(media);
+        }
+
+        public bool Delete(MediaItem media)
+        {
+
+            var mediaHelper = new MediaHelper(media);
+            mediaHelper.DeleteThumbnail();
+
+            return Provider.Delete(media.FilePath);
         }
     }
 }
