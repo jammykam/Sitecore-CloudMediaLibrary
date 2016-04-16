@@ -1,6 +1,5 @@
 ﻿using System.Text.RegularExpressions;
 using FS.MediaLibrary.CloudStorage.Interface;
-using FS.MediaLibrary.CloudStorage.Interface;
 using Sitecore.Configuration;
 using Sitecore.Data.Items;
 using Sitecore.Resources.Media;
