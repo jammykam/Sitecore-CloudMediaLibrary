@@ -84,9 +84,6 @@
     </Content>
   </ItemGroup>
   <ItemGroup>
-    <Content Include="App_Config\AppSettings.config" />
-  </ItemGroup>
-  <ItemGroup>
     <None Include="Properties\PublishProfiles\Debug.pubxml" />
     <None Include="Web.config.modification" />
   </ItemGroup>
