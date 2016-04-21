@@ -10,7 +10,7 @@ namespace FS.MediaLibrary.CloudStorage.Configuration
         {
             get
             {
-                return Sitecore.Configuration.Settings.GetSetting(ConfigSettings.MediaLinkCdnServerUrl);
+                return StringUtil.EnsurePostfix('/', SC.Settings.GetSetting(ConfigSettings.MediaLinkCdnServerUrl));
             }
         }
 
