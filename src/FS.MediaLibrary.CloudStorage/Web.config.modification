@@ -9,7 +9,7 @@
     <handlers>
       <!-- ********** Override Media Request Handler *************
       <add verb="*" path="sitecore_media.ashx" type="Sitecore.Resources.Media.MediaRequestHandler, Sitecore.Kernel" name="Sitecore.MediaRequestHandler"/>-->
-      <add verb="*" path="sitecore_media.ashx" type="FS.MediaLibrary.CloudStorage.Media.MediaRequestHandler, Media.CdnStorage" name="Sitecore.MediaRequestHandler"/>
+      <add verb="*" path="sitecore_media.ashx" type="FS.MediaLibrary.CloudStorage.Media.MediaRequestHandler, FS.MediaLibrary.CloudStorage" name="Sitecore.MediaRequestHandler"/>
     </handlers>
   </system.webServer>
 </configuration>
