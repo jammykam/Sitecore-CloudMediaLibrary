@@ -41,7 +41,7 @@ namespace FS.MediaLibrary.CloudStorage.Helpers
 
         public string GetCloudBasedMediaUrl(string cloudUrl)
         {
-            return cloudUrl + this.mediaItem.FilePath;
+            return cloudUrl + StringUtil.RemovePrefix("/", this.mediaItem.FilePath);
         }
 
         /// <summary>
